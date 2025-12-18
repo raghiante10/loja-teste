@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Produtos</title>
+  <link rel="stylesheet" href="admin.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fdfdfd;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #a3c4f3; /* azul pastel */
+      color: #333;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid #90a8d0;
+    }
+    h1 {
+      margin: 0;
+    }
+    .card {
+      background: #fff;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 8px;
+      border: 2px solid #e0e0e0;
+      max-width: 1000px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    h2, h3 {
+      color: #444;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background: #cce3de; /* verde pastel */
+      color: #333;
+    }
+    td {
+      background: #f8f9fa;
+    }
+    button {
+      background: #f6bd60; /* laranja pastel */
+      color: #333;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #f7a072;
+    }
+    img {
+      border-radius: 4px;
+    }
+    /* Botão flutuante de voltar */
+    .voltar-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #84a59d; /* verde acinzentado pastel */
+      color: #fff;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      transition: all 0.3s ease;
+    }
+    .voltar-btn:hover {
+      background: #6c8c84;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Controle de Produtos</h1>
+  </header>
+
+  <main>
+    <!-- Lista agrupada por subcategoria -->
+    <section class="card">
+      <h2>Produtos por Subcategoria</h2>
+      <div id="controle-lista"></div>
+    </section>
+  </main>
+
+  <!-- Botão flutuante para voltar -->
+  <button class="voltar-btn" onclick="window.location.href='admin.html'">
+    ⬅ Voltar para Admin
+  </button>
+
+  <script>
+    const API_URL = "http://localhost:4000/api/produtos";
+    const token = localStorage.getItem("token");
+
+    // Função para listar agrupados por subcategoria
+    async function listarControle() {
+      const res = await fetch(API_URL);
+      const produtos = await res.json();
+
+      // Agrupar por subcategoria
+      const grupos = {};
+      produtos.forEach(p => {
+        const sub = p.subcategoria || "Sem subcategoria";
+        if (!grupos[sub]) grupos[sub] = [];
+        grupos[sub].push(p);
+      });
+
+      const container = document.getElementById("controle-lista");
+      container.innerHTML = "";
+
+      // Renderizar cada grupo
+      for (const sub in grupos) {
+        const section = document.createElement("div");
+        section.className = "card";
+        section.innerHTML = `<h3>${sub}</h3>`;
+        const table = document.createElement("table");
+        table.innerHTML = `
+          <thead>
+            <tr>
+              <th>Nome</th><th>Preço</th><th>Categoria</th><th>Imagem</th><th>Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        `;
+        const tbody = table.querySelector("tbody");
+
+        grupos[sub].forEach(p => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${p.nome}</td>
+            <td>R$ ${p.preco}</td>
+            <td>${p.categoria}</td>
+            <td><img src="${p.imagem}" width="50"></td>
+            <td><button onclick="apagarProduto('${p._id}')">Apagar</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+
+        section.appendChild(table);
+        container.appendChild(section);
+      }
+    }
+
+    // Função para apagar produto
+    async function apagarProduto(id) {
+      if (!token) {
+        alert("Você precisa estar logado!");
+        return;
+      }
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${token.trim()}` }
+      });
+      if (res.ok) {
+        alert("Produto removido!");
+        listarControle(); // atualiza lista
+      } else {
+        alert("Erro ao remover produto");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", listarControle);
+  </script>
+</body>
+</html>

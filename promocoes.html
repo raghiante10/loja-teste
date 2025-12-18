@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promoções</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Promoções</h1>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="homem.html">Homem</a>
+      <a href="mulher.html">Mulher</a>
+      <a href="promocoes.html">Promoções</a>
+      <a href="novidade.html">Novidades</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="area-branca">
+      <h2>Ofertas Especiais</h2>
+      <!-- agora com scroll horizontal -->
+      <div class="produtos-scroll" id="lista-promocoes"></div>
+    </section>
+
+    <!-- Carrinho -->
+    <section id="carrinho">
+      <h2>Carrinho de Compras</h2>
+      <ul id="lista-carrinho"></ul>
+      <p>Total: R$ <span id="total">0.00</span></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>loja teste</p>
+  </footer>
+
+  <!-- scripts -->
+  <script src="script.js"></script>
+  <script src="script-produtos.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      carregarProdutos("ativo=true&promocao=true", "lista-promocoes");
+    });
+  </script>
+</body>
+</html>

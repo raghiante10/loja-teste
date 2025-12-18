@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>loja teste</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Minha Loja teste</h1>
+    <li>
+        <nav>
+  <a href="index.html">Início</a>
+  <a href="homem.html">Homem</a>
+  <a href="mulher.html">Mulher</a>
+  <a href="promocoes.html">Promoções</a>
+  <a href="novidade.html">Novidades</a>
+</nav>
+  </header>
+
+  <main>
+    <!-- Área branca para destaque -->
+    <section class="area-branca">
+      <h2>Novidades da Semana</h2>
+      <div class="item">
+       <h2>Novidades da Semana</h2>
+  <div class="produtos-scroll" id="lista-novidades-home"></div>
+
+       
+      </div>
+    </section>
+
+    <!-- Produtos masculinos -->
+    <section class="homem">
+      <h2>Moda Masculina</h2>
+      <div class="produtos">
+        
+        
+      </div>
+    </section>
+
+    <!-- Produtos femininos -->
+    <section class="mulher">
+      <h2>Moda Feminina</h2>
+      <div class="produtos">
+        
+        
+      </div>
+    </section>
+
+    <!-- Carrinho -->
+    <section id="carrinho">
+      <h2>Carrinho de Compras</h2>
+      <ul id="lista-carrinho"></ul>
+      <p>Total: R$ <span id="total">0.00</span></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>loja teste</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="script.js"></script>
+<script src="script-produtos.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const res = await fetch("http://localhost:4000/api/produtos?ativo=true&novidade=true");
+    let produtos = await res.json();
+
+    // pega só os 3 primeiros
+    produtos = produtos.slice(0, 3);
+
+    const container = document.getElementById("lista-novidades-home");
+    container.innerHTML = "";
+
+    produtos.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "item";
+      card.innerHTML = `
+        <img src="${p.imagem || 'img/placeholder.jpg'}" alt="${p.nome}">
+        <h3>${p.nome}</h3>
+        ${
+          p.precoOriginal
+            ? `<p><s>R$ ${p.precoOriginal.toFixed(2).replace('.', ',')}</s> R$ ${p.preco.toFixed(2).replace('.', ',')}</p>`
+            : `<p>R$ ${p.preco.toFixed(2).replace('.', ',')}</p>`
+        }
+        <button onclick="adicionarAoCarrinho('${p.nome.replace(/'/g, "\\'")}', ${p.preco})">Comprar</button>
+      `;
+      container.appendChild(card);
+    });
+  });
+</script>
+  
+</body>
+</html>

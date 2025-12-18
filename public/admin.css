@@ -1,0 +1,112 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #fafafa;
+  color: #444;
+  padding: 20px;
+}
+
+/* Cabeçalho */
+header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+header h1 {
+  font-size: 28px;
+  color: #6b4f4f; /* marrom suave */
+}
+
+/* Cards (seções) */
+.card {
+  background: #fff;
+  border: 1px solid #e0dcdc;
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.card h2 {
+  margin-bottom: 12px;
+  font-size: 20px;
+  color: #7a6f6f;
+}
+
+/* Área de cadastro de produtos com azul pastel */
+.card:nth-of-type(2) {
+  background: #e6f0fa; /* azul pastel */
+  border: 1px solid #b0c4de;
+}
+.card:nth-of-type(2) h2 {
+  color: #3b4d61;
+}
+
+/* Inputs e selects */
+input, select {
+  margin: 6px 4px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #dcdcdc;
+  font-size: 14px;
+  background: #fdfdfd;
+  color: #444;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: #a3c4bc; /* verde pastel */
+  box-shadow: 0 0 6px rgba(163,196,188,0.6);
+}
+
+/* Botões */
+button {
+  margin: 6px 4px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  background: #f7b2b7; /* rosa pastel */
+  color: #fff;
+  transition: background 0.2s ease;
+}
+button:hover {
+  background: #f28c8c; /* rosa mais forte */
+}
+button.danger {
+  background: #f5a3a3; /* vermelho pastel */
+}
+button.danger:hover {
+  background: #e57373;
+}
+
+/* Tabela de produtos */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background: #f0e6f6; /* lilás pastel */
+  color: #444;
+}
+tbody tr:hover {
+  background: #f9f9f9;
+}
+
+/* Cadastro em lote */
+.lote-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}

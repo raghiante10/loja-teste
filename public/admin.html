@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel Admin</title>
+  <link rel="stylesheet" href="admin.css">
+  <style>
+    /* Botão flutuante para controle.html */
+    .controle-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      color: #fff;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      transition: all 0.3s ease;
+    }
+    .controle-btn:hover {
+      background: linear-gradient(135deg, #0056b3, #0099cc);
+      transform: scale(1.05);
+    }
+
+    /* Área de mensagens */
+    #mensagem {
+      margin: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      display: none;
+    }
+    #mensagem.sucesso {
+      background: #d4edda;
+      color: #155724;
+    }
+    #mensagem.erro {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Painel Administrativo</h1>
+  </header>
+
+  <!-- Área de mensagens -->
+  <div id="mensagem"></div>
+
+  <main>
+    <!-- Login -->
+    <section class="card">
+      <h2>Login</h2>
+      <input id="email" placeholder="Email">
+      <input id="senha" type="password" placeholder="Senha">
+      <button type="button" onclick="login()">Entrar</button>
+    </section>
+
+    <!-- Status de login -->
+    <div id="statusLogin"></div>
+
+    <!-- Cadastro único -->
+    <section class="card">
+      <h2>Cadastrar Produto</h2>
+      <input id="nome" placeholder="Nome">
+      <input id="preco" type="number" step="0.01" placeholder="Preço">
+
+      <!-- Categoria principal -->
+      <select id="categoria" onchange="atualizarSubcategorias()">
+        <option value="homem">Homem</option>
+        <option value="mulher">Mulher</option>
+      </select>
+
+      <!-- Subcategoria dinâmica -->
+      <select id="subcategoria"></select>
+
+      <!-- Agora pode ser URL ou upload local -->
+      <input id="imagem" type="file" accept="image/*">
+
+      <!-- Campos extras -->
+      <label><input type="checkbox" id="ativo" checked> Ativo</label>
+      <label><input type="checkbox" id="novidade"> Novidade</label>
+      <label><input type="checkbox" id="promocao"> Promoção</label>
+
+      <!-- Botão ajustado: adiciona à lista, não cadastra direto -->
+      <button type="button" onclick="adicionarProdutoNaLista()">Adicionar à Lista</button>
+    </section>
+
+    <!-- Lista de produtos -->
+    <section class="card">
+      <h2>Lista de Produtos</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th><th>Preço</th><th>Categoria</th><th>Subcategoria</th><th>Imagem</th><th>Ativo</th><th>Novidade</th><th>Promoção</th><th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="lista"></tbody>
+      </table>
+      <!-- Botão para salvar todos os produtos da lista -->
+     
+      
+    <!-- Cadastro em lote -->
+    <section class="card">
+      <h2>Cadastro em Lote</h2>
+      <div id="lote"></div>
+      <button type="button" onclick="adicionarLinha()">Adicionar Produto</button>
+      <button type="button" onclick="salvarLote()">Salvar Todos</button>
+    </section>
+  </main>
+
+  <!-- Botão flutuante para controle.html -->
+  <button class="controle-btn" onclick="window.location.href='controle.html'">
+    🔧 Controle de Produtos
+  </button>
+
+  <!-- Script externo -->
+  <script src="adm.js"></script>
+</body>
+</html>

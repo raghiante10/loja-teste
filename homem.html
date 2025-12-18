@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moda Masculina</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Moda Masculina</h1>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="homem.html">Homem</a>
+      <a href="mulher.html">Mulher</a>
+      <a href="promocoes.html">Promoções</a>
+      <a href="novidade.html">Novidades</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Camisas -->
+    <section class="homem" id="camisas">
+      <h2>Camisas e Camisetas</h2>
+      <div class="produtos" id="lista-camisas"></div>
+    </section>
+
+    <!-- Calças -->
+    <section class="homem" id="calcas">
+      <h2>Calças</h2>
+      <div class="produtos" id="lista-calcas"></div>
+    </section>
+
+    <!-- Blusas -->
+    <section class="homem" id="blusas">
+      <h2>Blusas</h2>
+      <div class="produtos" id="lista-blusas"></div>
+    </section>
+
+    <!-- Bermudas -->
+    <section class="homem" id="bermudas">
+      <h2>Bermudas</h2>
+      <div class="produtos" id="lista-bermudas"></div>
+    </section>
+
+    <!-- Carrinho -->
+    <section id="carrinho">
+      <h2>Carrinho de Compras</h2>
+      <ul id="lista-carrinho"></ul>
+      <p>Total: R$ <span id="total">0.00</span></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>loja teste</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const API = "http://localhost:4000/api/produtos";
+
+    async function carregarProdutos(categoria, subcategoria, containerId) {
+      try {
+        const res = await fetch(`${API}?categoria=${categoria}&subcategoria=${subcategoria}`);
+        const produtos = await res.json();
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+
+        produtos.forEach(p => {
+          const card = document.createElement("div");
+          card.className = "item";
+          card.innerHTML = `
+            <img src="${p.imagem || 'img/placeholder.jpg'}" alt="${p.nome}">
+            <h3>${p.nome}</h3>
+            <p>R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
+            <button onclick="adicionarAoCarrinho('${p.nome.replace(/'/g, "\\'")}', ${p.preco})">Comprar</button>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Erro ao carregar produtos:", err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      carregarProdutos("homem", "camisas", "lista-camisas");
+      carregarProdutos("homem", "calcas", "lista-calcas");
+      carregarProdutos("homem", "blusas", "lista-blusas");
+      carregarProdutos("homem", "bermudas", "lista-bermudas");
+    });
+  </script>
+</body>
+</html>
