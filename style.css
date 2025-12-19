@@ -169,3 +169,16 @@ footer {
   display: block;
   margin: 0 auto;   /* centraliza a imagem */
 }
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #6a0dad; /* Roxo */
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #4b0082; /* Roxo mais escuro */
+}
