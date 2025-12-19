@@ -45,7 +45,7 @@ Apaixonado por tecnologia, design e soluções que encantam.
 ## 🌐 Publicação
 
 O site está disponível via **GitHub Pages**:  
-🔗 [[https://raghiante10.github.io/loja-teste][(https://raghiante10.github.io/loja-teste](https://raghiante10.github.io/loja-teste/))
+🔗 (https://raghiante10.github.io/loja-teste/))
 ](https://raghiante10.github.io/loja-teste/)
 ---
 
